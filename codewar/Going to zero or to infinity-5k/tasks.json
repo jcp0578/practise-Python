@@ -1,0 +1,7 @@
+{
+    "version": "0.1.0",
+    "command": "D:\\Program Files\\python\\Python37\\python.exe",
+    "isShellCommand": true,
+    "args": ["${file}"],
+    "showOutput": "always"
+}
