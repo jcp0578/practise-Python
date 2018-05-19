@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 '''
-f(n)=f(n-1)+f(n-2)
+
 '''
 
 import sys
