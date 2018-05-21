@@ -3,7 +3,11 @@
 
 
 import sys
-sys.path.append('../')
+#run on single file
+#sys.path.append('../')
+
+#run on Python workspace
+sys.path.append('.\practise-Python\codewar')
 import cw as test
 import time
 
@@ -12,23 +16,18 @@ import time
 '''
 
 '''
+#from math import *;circleIntersection=lambda a,b,r:int([r*r*(i-sin(i))for i in[2*acos(min(sqrt((a[0]-b[0])**2+(a[1]-b[1])**2)/2/r,1))]][0]) 
 
-from math import sqrt,acos  
-def distance(lst1,lst2):return sqrt((lst1[0]-lst2[0])**2+(lst1[1]-lst2[1])**2)
+#from math import *;circleIntersection=lambda a,b,r:int([2*r*r*acos(i/r)-2*i*sqrt(r*r-i*i)if i<r else 0 for i in[sqrt((a[0]-b[0])**2+(a[1]-b[1])**2)/2]][0]) 
 
-def circleIntersection(a,b,r):return int(2*r*r*acos(sqrt((a[0]-b[0])**2+(a[1]-b[1])**2)/2/r)-2*sqrt(r*r-((a[0]-b[0])**2+(a[1]-b[1])**2)/4)*(distance(a,b)/2)) if distance(a,b)/2<r else 0    
 
-        
+#code length is 130
+from math import *;circleIntersection=lambda a,b,r:int([r*r*(i-sin(i))for i in[2*acos(min(hypot(a[0]-b[0],a[1]-b[1])/2/r,1))]][0])
 
 
 if __name__ == "__main__":
 
     t0 = time.time()
-
-
-#    circleIntersection=lambda a,b,r: 
-# coding and coding.. shorter and more shorter..  good luck! ;-)
-
 
     test.assert_equals(circleIntersection([0, 0],[7, 0],5),14)
 
