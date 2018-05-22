@@ -65,11 +65,7 @@ class Solution(object):
                 out_temp.append(root.val)
                 mid_order(root.right)
         mid_order(root)
-        for i in range(len(out_temp)-1):
-            if out_temp[i] >=out_temp[i+1]:
-                return False
-        else:
-            return True
+        return all([out_temp[i] < out_temp[i+1] for i in range(len(out_temp)-1)])
          
 
 
