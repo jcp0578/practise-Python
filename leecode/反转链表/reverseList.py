@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 '''
-AC but not good
+AC but not good solution
 '''
 
 import sys
