@@ -1,13 +1,11 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 '''
-not right
+AC
 '''
 
 import sys
 import time
-
-
 
 
 class Solution(object):
@@ -16,25 +14,17 @@ class Solution(object):
         :type prices: List[int]
         :rtype: int
         """
-        change=[]
-        profit=[]
-        for i in range(len(prices)-1):
-            change.append(prices[i+1]-prices[i])
-        profit_t=0
-        for change_i in change:
-            if change_i>0:
-                profit_t+=change_i
+        len_t = len(prices)
+        if len_t < 2:
+            return 0
+        max_t = 0
+        prices_t = prices[0]
+        for i in range(len_t):
+            if prices[i] < prices_t:
+                prices_t = prices[i]
             else:
-                profit.append(profit_t)
-                profit_t=0
-        else:
-            profit.append(profit_t)
-            profit_t=0
-        return max(profit)
-
-        
-
-            
+                max_t = max(max_t, prices[i] - prices_t)
+        return max_t
 
 
 if __name__ == "__main__":
@@ -43,27 +33,29 @@ if __name__ == "__main__":
 
     test = Solution()
 
-    test_list=[[7,1,5,3,6,4],[7,6,4,3,1],[1,2,3,4,5,6]]
+    test_list = [[7, 1, 5, 3, 6, 4], [7, 2, 4, 1], [2, 7, 3, 2, 3, 4, 5, 6],
+                 [], [1, 2],
+                 list(range(10000))]
     for i in test_list:
         print(test.maxProfit(i))
 
     print(time.perf_counter() - t0)
-
-
 '''
 class Solution(object):
-    def climbStairs(self, n):
+    def maxProfit(self, prices):
         """
-        :type n: int
+        :type prices: List[int]
         :rtype: int
         """
-        df =[]
-        for i in range(n):
-            if i+1==1:
-                df.append(1)
-            if i+1==2:
-                df.append(2)
-            if i+1>2:
-                df.append(df[i-1]+df[i-2])
-        return df[n-1]
+        if len(prices)==0:
+            return 0
+        min_ = sys.maxint
+        cur_max = 0
+        
+        for price in prices:
+            if price >min_:
+                cur_max = max(cur_max,price-min_)
+            else:
+                min_=price
+        return cur_max
 '''
