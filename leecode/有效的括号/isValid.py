@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 '''
-AC
+AC but not a good solution
 '''
 import time
 
@@ -12,18 +12,23 @@ class Solution:
         :type s: str
         :rtype: bool
         """
-        left = {'[': 1, '(':2, '{':3}
-        right = {']':1, ')':2, '}':3}
-        left_s = []
+        trantab = s.maketrans("()[]{}", "142536")
+        s = s.translate(trantab)
+        s = list(map(int, s))
+        stack = []
         for i in s:
-            if i in left:
-                left_s.append(left[i])
+            if i < 4:
+                stack.append(i)
             else:
-                if len(left_s) == 0:
+                try:
+                    if i - stack.pop() == 3:
+                        pass
+                    else:
+                        return False
+                except IndexError:
                     return False
-                if left_s.pop() != right[i]:
-                    return False
-        return len(left_s) == 0
+        else:
+            return len(stack)==0
 
 
 if __name__ == "__main__":
@@ -55,6 +60,4 @@ class Solution:
                     return False
                 stack.pop()
         return len(stack) == 0
-
-
 '''
