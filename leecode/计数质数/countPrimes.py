@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 '''
-AC but not a good solution 
+AC 
 '''
 
 import time
@@ -19,10 +19,7 @@ class Solution:
         for i in range (2,int(sqrt(n)+1)):
             if isPrimes[i]==0:
                 continue
-            j=i*i
-            while j<n:
-               isPrimes[j]=0
-               j+=i 
+            isPrimes[i*i:n:i] = [0]*len(isPrimes[i*i:n:i]) 
         return sum(isPrimes)-2
         
         
@@ -39,21 +36,5 @@ if __name__ == "__main__":
 
 
 '''
-class Solution:
-    def countPrimes(self, n):
-        """
-        :type n: int
-        :rtype: int
-        """
-        
-        if n <= 2:
-            return 0
-        prime = [0] * n
-        l = int(n**0.5)
-        for i in range(2, l+1):
-            if prime[i]:
-                continue
-            prime[i*i:n:i] = [1]*len(prime[i*i:n:i])
-            
-        return len(prime) - sum(prime) -2
+
 '''
