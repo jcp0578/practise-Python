@@ -7,6 +7,7 @@ AC
 import time
 from math import *
 
+
 class Solution:
     def isPowerOfThree(self, n):
         """
@@ -15,22 +16,18 @@ class Solution:
         """
         if n < 1:
             return False
-        return pow(3,round(log(n,3)))==n
-        
-        
-        
+        return pow(3, round(log(n, 3))) == n
+
 
 if __name__ == "__main__":
 
     t0 = time.perf_counter()
-    testlist=[243,1162261466]
-    test=Solution()
+    testlist = [243, 1162261466]
+    test = Solution()
     for i in testlist:
         print(test.isPowerOfThree(i))
 
     print(time.perf_counter() - t0)
-
-
 '''
 class Solution:
     def isPowerOfThree(self, n):
