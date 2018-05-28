@@ -104,17 +104,27 @@ if __name__ == "__main__":
                   (out_t, answer_list[i], test_list[i]))
 
     print("\nRun Time is %f s" % (time.perf_counter() - t0))
+
+
 '''
-class Solution(object):
-    def getIntersectionNode(self, headA, headB):
+class Solution:
+    def inorderTraversal(self, root):
         """
-        :type head1, head1: ListNode
-        :rtype: ListNode
+        :type root: TreeNode
+        :rtype: List[int]
         """
-        p1 = headA
-        p2 = headB
-        while(p1 != p2):
-            p1 = headB if p1 == None else p1.next
-            p2 = headA if p2 == None else p2.next
-        return p1
+        if root is None:
+          return []
+        stack = [root]
+        res = []
+        cur_node = root.left
+        while stack!=[] or cur_node is not None:
+          while cur_node is not None:
+            stack.append(cur_node)
+            cur_node = cur_node.left
+          if stack!=[]:
+            cur_node = stack.pop()
+            res.append(cur_node.val)
+            cur_node = cur_node.right
+        return res 
 '''
