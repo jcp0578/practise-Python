@@ -23,25 +23,23 @@ class Solution:
         :rtype: List[int]
         """
         out_t = []
-        save_t = []  #save root val
-        save_node_t = []  #save right id
+        save_t = []  # save next root
+        out_node_t = []  # save node
         p = root
         while p:
-            while p.left is not None:
-                save_t.append(p.val)
-                if p.right is not None:
-                    save_node_t.append(p.right)
+            while p.left is not None and p.left not in out_node_t:
+                save_t.append(p)
                 p = p.left
-            out_t.append(p.val)
+            out_node_t.append(p)
             if p.right is not None:
                 p = p.right
             else:
                 try:
-                    while len(save_t):
-                        out_t.append(save_t.pop())
-                    p = save_node_t.pop()
+                    p = save_t.pop()
                 except IndexError:
                     p = None
+        for i in out_node_t:
+            out_t.append(i.val)
         return out_t
 
 
@@ -91,9 +89,9 @@ if __name__ == "__main__":
     t0 = time.perf_counter()
 
     test_add_list = [[1, 2, 3, 4, -1, 5, -1, 6, -1, -1, -1, 7],
-                     [4, 2, -1, 1, 3], [2, 3, 5], [], [1]]
+                     [4, 2, -1, 1, 3], [2, 3, 5], [], [1,-1,2,3,4,5,-1]]
     test_list = []
-    answer_list = [[7, 6, 4, 2, 1, 5, 3], [1, 2, 3, 4], [3, 2, 5], [], [1]]
+    answer_list = [[7, 6, 4, 2, 1, 5, 3], [1, 2, 3, 4], [3, 2, 5], [],[1,5,3,2,4]]
     for i in range(len(test_add_list)):
         test_list.append(stringToTreeNode(test_add_list[i]))
     test = Solution()
