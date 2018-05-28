@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 '''
-error
-
+AC by loop
+but could be better
 '''
 from math import pow
 import time
