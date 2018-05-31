@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 '''
-error
+AC - a bad solution
 '''
 
 import time
@@ -16,32 +16,14 @@ class Solution:
         """
         if matrix == []:
             return False
-        len_m = len(matrix)
-        len_n = len(matrix[0])
-        start = (0, 0)
-        end = (len_m, len_n)
-        mid = ((start[0] + end[0]) // 2, (start[1] + end[1]) // 2)
-        while start != mid:           
-            if matrix[mid[0]][mid[1]] == target:
+        for list_t in matrix:
+            try:
+                list_t.index(target)
                 return True
-            elif matrix[mid[0]][mid[1]] > target:
-                end = mid
-            else:
-                start = mid
-            mid = ((start[0] + end[0]) // 2, (start[1] + end[1]) // 2)
-        try:
-            if matrix[mid[0] + 1][mid[1]] == target:
-                return True
-        except IndexError:
-            pass
-
-        try:
-            if matrix[mid[0]][mid[1] + 1] == target:
-                return True
-        except IndexError:
-            pass
-
-        return False
+            except ValueError:
+                pass
+        else :
+            return False
 
 
 if __name__ == "__main__":
