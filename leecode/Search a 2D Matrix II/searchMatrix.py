@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 '''
-AC - a bad solution
+AC
 '''
 
 import time
@@ -14,16 +14,19 @@ class Solution:
         :type target: int
         :rtype: bool
         """
-        if matrix == []:
+        if not matrix or not matrix[0]:
             return False
-        for list_t in matrix:
-            try:
-                list_t.index(target)
-                return True
-            except ValueError:
-                pass
-        else :
-            return False
+        len_m = len(matrix)
+        for i in range(len_m):
+            if matrix[i][0]>target:
+                break
+            elif matrix[i][-1]>=target and matrix[i][0] <= target:
+                try:
+                    matrix[i].index(target)
+                    return True
+                except ValueError:
+                    pass
+        return False
 
 
 if __name__ == "__main__":
@@ -36,8 +39,8 @@ if __name__ == "__main__":
         [3, 6, 9, 16, 22],
         [10, 13, 14, 17, 24],
         [18, 21, 23, 26, 30],
-    ], [[4, 5, 6, 7, 0, 1, 2]], []]
-    test_list_2 = [19, 6, 1]
+    ], [[4, 5, 6, 7, 8, 9, 21]], [[]]]
+    test_list_2 = [17, 6, 1]
     answer_list = [True, True, False]
 
     test = Solution()
@@ -52,6 +55,29 @@ if __name__ == "__main__":
                 % (out_t, answer_list[i], test_list[i]))
 
     print("\nRun Time is %f s" % (time.perf_counter() - t0))
-'''
 
+'''
+class Solution:
+    def searchMatrix(self, matrix, target):
+        """
+        :type matrix: List[List[int]]
+        :type target: int
+        :rtype: bool
+        """
+        if len(matrix)==0 or len(matrix[0])==0:
+            return False
+        for i in range(len(matrix)):
+            if target==matrix[i][-1] or target==matrix[i][0]:
+                return True
+            elif target<matrix[i][-1] and target>matrix[i][0]:
+                left,right=0,len(matrix[i])-1
+                while left<=right:
+                    mid=(left+right)//2
+                    if target==matrix[i][mid]:
+                        return True
+                    elif target>matrix[i][mid]:
+                        left=mid+1
+                    else:
+                        right=mid-1
+        return False
 '''
