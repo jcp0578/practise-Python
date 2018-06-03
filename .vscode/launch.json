@@ -10,12 +10,15 @@
             "request": "launch",
             "program": "${file}",
             "console": "none",
+<<<<<<< HEAD
             "args": [
                 "${file}"
             ],
 
 
 
+=======
+>>>>>>> bcaaeef0772a5a5e51387d27dd6c3407a2be148b
         },
         {
             "name": "Python: Attach",

@@ -1,0 +1,56 @@
+#!/usr/bin/python3
+# -*- coding: utf-8 -*-
+'''
+time out -2
+'''
+
+import time
+
+
+class Solution:
+    def coinChange(self, coins, amount):
+        """
+        :type coins: List[int]
+        :type amount: int
+        :rtype: int
+        """
+        if amount < 0:
+            return -1
+        elif amount == 0:
+            return 0
+        num_temp=amount+1
+        out_t=[num_temp]*(num_temp)
+        coins_len=len(coins)
+        out_t[0]=0
+        for i in range(num_temp):
+            for coin in coins:
+                if i >=coin and out_t[i-coin]!=num_temp:
+                    out_t[i]=min(out_t[i],out_t[i-coin]+1)
+                
+        return out_t[i] if out_t[i]!=num_temp else -1
+
+
+if __name__ == "__main__":
+
+    t0 = time.perf_counter()
+
+    test_list = [[1, 2, 5], [2], [1], [186, 419, 83, 408], [2, 15],[1,14,15],[227,99,328,299,42,322],[253,27,214,340,158,92,52,126,466,431,95]]
+    test_list_2 = [11, 3, 0, 6249, 31,42,9847,3046]
+    answer_list = [3, -1, 0, 20, 9,3,31,8]
+
+    test = Solution()
+    for i in range(len(test_list)):
+        out_t = test.coinChange(test_list[i], test_list_2[i])
+
+        if out_t == answer_list[i]:
+            print("\033[1;32;40m  Pass \033[0m")
+        else:
+            print(
+                "\033[1;31;40m  Fail!!\033[0m\033[0;34;40m out \"%s\" should \"%s\" by \"%.50s\" "
+                % (out_t, answer_list[i],
+                   str(test_list[i]) + " " + str(test_list_2[i])))
+
+    print("\nRun Time is %f s" % (time.perf_counter() - t0))
+'''
+
+'''
