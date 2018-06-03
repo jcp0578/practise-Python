@@ -1,51 +1,56 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 '''
-error
+time out
 '''
 
 import time
 
 
 class Solution:
+    _out_t=[]
+
+    def RestCoinChange(self, coins, amount,sum):
+
+        if len(coins) == 1:
+            if amount % coins[0] == 0:
+                self._out_t.append(sum+ amount // coins[0])
+                return 0
+            else:
+                return -1
+        else:
+            if amount % coins[0] == 0:
+                self._out_t.append(sum+amount // coins[0])
+                return 0
+            i = amount // coins[-0]
+            while i >= 0:
+                self.RestCoinChange(coins[1:], amount - i * coins[0],sum+i)
+                i -= 1
+        return -1
+
     def coinChange(self, coins, amount):
         """
         :type coins: List[int]
         :type amount: int
         :rtype: int
         """
-        if amount <0:
+        if amount < 0:
             return -1
-        elif amount ==0:
+        elif amount == 0:
             return 0
-        
+        self._out_t=[]
         coins.sort(reverse=True)
-        len_t=len(coins)
-        for i in range(len_t):
-            out=0
-            amount_t=amount
-            for j in range(i,len_t):
-                if amount_t:
-                    out+=amount_t//coins[j]
-                    amount_t%=coins[j]
-                else:
-                    return out
-            else:
-                if amount_t==0:
-                    return out                   
-        return -1
-
-        
-         
+        self.RestCoinChange(coins, amount,0)
+        return min(self._out_t) if len(self._out_t) else -1
 
 
 if __name__ == "__main__":
 
     t0 = time.perf_counter()
 
-    test_list = [[1,2,5],[2],[1],[186,419,83,408],[2,15]]
-    test_list_2 = [11,3,0,6249,31]
-    answer_list = [3,-1,0,20,9]
+    test_list = [[1, 2, 5], [2], [1], [186, 419, 83, 408], [2, 15],[1,14,15],[227,99,328,299,42,322]]
+    test_list_2 = [11, 3, 0, 6249, 31,42,9847]
+    answer_list = [3, -1, 0, 20, 9,3,31]
 
     test = Solution()
     for i in range(len(test_list)):
@@ -60,7 +65,6 @@ if __name__ == "__main__":
                    str(test_list[i]) + " " + str(test_list_2[i])))
 
     print("\nRun Time is %f s" % (time.perf_counter() - t0))
-
 '''
 
 '''
