@@ -1,24 +1,20 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 '''
-AC
+AC - simply code
 '''
 
 import time
 
 
 class Solution:
-    _flag=[]
     _grid=[[]]
     def dfs(self,x,y):
         try:
             if x <0 or y<0:
                 return 0
             if self._grid[y][x]=="1":
-                if self._flag[y][x]==1:
-                    return 1
-                else:
-                    self._flag[y][x]=1
+                    self._grid[y][x]="2"
                     self.dfs(x+1,y)
                     self.dfs(x-1,y)
                     self.dfs(x,y+1)
@@ -26,9 +22,6 @@ class Solution:
             return 0
         except IndexError:
             return 0
-
-
-
     def numIslands(self, grid):
         """
         :type grid: List[List[str]]
@@ -38,16 +31,11 @@ class Solution:
         if len_y ==0:
             return 0
         len_x=len(grid[0])
-        self._flag=[]
-        for i in range(len_y):
-            self._flag.append([])
-            for j in range(len_x):
-                self._flag[i].append(0)
         self._grid=grid
         out_t=0
         for i in range(len_y):
             for j in range(len_x):
-                if self._flag[i][j]==0 and grid[i][j]=="1":
+                if grid[i][j]=="1":
                     out_t+=1
                     self.dfs(j,i)
         return out_t
