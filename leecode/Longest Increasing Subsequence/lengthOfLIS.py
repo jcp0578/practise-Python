@@ -1,7 +1,8 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 '''
-AC - but O(n^2)
+AC
+O(NlogN)
 '''
 
 import time
@@ -13,17 +14,20 @@ class Solution:
         :type nums: List[int]
         :rtype: int
         """
-        if nums == []:
-            return 0
         len_t = len(nums)
-        max_t = [1]*len_t
-
-        for i in range(len_t):
-            for j in range(i, -1, -1):
-                if nums[i] > nums[j]:
-                    if max_t[i] < max_t[j]+1:
-                        max_t[i] = max_t[j]+1
-        return max(max_t)
+        max_t = [0]*len_t #用于保存m个最长上升序列的最后一位数值
+        size_t=0
+        for num in nums:
+            start,end =0,size_t
+            while start !=end:
+                mid=(start+end)//2
+                if max_t[mid] < num:
+                    start=mid+1
+                else:
+                    end=mid
+            max_t[start]=num
+            size_t=max(size_t,start+1)
+        return size_t
 
 
 if __name__ == "__main__":
@@ -49,5 +53,59 @@ if __name__ == "__main__":
 
 
 '''
-
+class Solution:
+    def lengthOfLIS(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        # 动态规划O(n**2), 超时
+        # [0...i]的最大上升子序列,要求必须包含第i个元素,的长度
+#         length = len(nums)
+#         if length == 0:
+#             return 0
+#         memo = [1 for i in range(length)]
+#         for i in range(1, length):
+#             j = 0
+#             while j < i:
+#                 if nums[j] < nums[i]:
+#                     memo[i] = max(memo[i], memo[j] + 1)
+#                 j += 1
+        
+#         return max(memo)
+        
+        # 加入二分搜索,时间复杂度O(nlogn)
+        def BinarySearch(m, maxlength, t):
+            low = 1
+            high = maxlength
+            while low <= high:
+                mid = int((low + high) / 2)
+                if t == m[mid]:
+                    return mid
+                elif t > m[mid]:
+                    low = mid + 1
+                else:
+                    high = mid - 1
+            return low
+        
+        length = len(nums)
+        if length == 0:
+            return 0
+        if length == 1:
+            return 1
+        # m[x]存放长度为x的最长上升子序列的最大末尾数
+        
+        maxlength = 1  # 从1开始,序列长度是从1开始
+        m = [-1 for i in range(length+1)]
+        m[maxlength] = nums[0]
+        
+        for i in range(1, length):
+            if nums[i] > m[maxlength]:
+                maxlength += 1
+                m[maxlength] = nums[i]
+            else:
+                p = BinarySearch(m, maxlength, nums[i])
+                m[p] = nums[i]
+            
+        return maxlength
 '''
