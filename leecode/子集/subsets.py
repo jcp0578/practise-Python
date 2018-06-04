@@ -1,0 +1,57 @@
+#!/usr/bin/python3
+# -*- coding: utf-8 -*-
+'''
+
+'''
+
+import time
+
+
+class Solution:
+    def subsets(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        out_t=[]
+        out_t.append([])
+        res=[[num] for num in nums]
+        out_t.extend(res)
+        return out_t
+
+if __name__ == "__main__":
+
+    t0 = time.perf_counter()
+
+    test_list = [[1, 2, 3]]
+    answer_list = [[[3], [1], [2], [1, 2, 3], [1, 3], [2, 3], [1, 2], []],    ]
+
+    test = Solution()
+    for i in range(len(test_list)):
+        out_t = test.subsets(test_list[i])
+
+        if out_t == answer_list[i]:
+            print("\033[1;32;40m  Pass \033[0m")
+        else:
+            print(
+                "\033[1;31;40m  Fail!!\033[0m\033[0;34;40m out \"%s\" should \"%s\" by \"%.50s\" "
+                % (out_t, answer_list[i], str(test_list[i])))
+
+    print("\nRun Time is %f s" % (time.perf_counter() - t0))
+'''
+class Solution:
+    def permute(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        ans = []
+        if len(nums)<=1:
+            ans.append(nums)
+        else:
+            for i,num in enumerate(nums):
+                n = nums[:i]+nums[i+1:]
+                for y in self.permute(n):
+                    ans.append([num]+y)
+        return ans
+'''
