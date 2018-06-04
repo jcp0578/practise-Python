@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 '''
-AC but not a good solution
+AC
 '''
 
 import time
@@ -13,18 +13,8 @@ class Solution:
         :type nums: List[int]
         :rtype: int
         """
-        len_t=len(nums)
-        over_t = len_t//2+len_t%2
-        dict_t={}
-        for i in range(len_t):
-            try:
-                dict_t[nums[i]]+=1
-                if dict_t[nums[i]] >= over_t:
-                    return nums[i]
-            except KeyError:
-                dict_t[nums[i]]=1
-        else:
-            return max(dict_t.keys())
+        nums.sort()
+        return nums[len(nums)//2]
         
 
 
@@ -32,7 +22,7 @@ if __name__ == "__main__":
 
     t0 = time.perf_counter()
 
-    test_list = [[3,2,3],[2,2,1,1,1,2,2,3]]
+    test_list = [[3,2,3],[2,2,3,3,3,2,2]]
     answer_list = [3,2]
 
     test = Solution()
