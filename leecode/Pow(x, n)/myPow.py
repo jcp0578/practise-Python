@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 '''
-time out 
+AC 
 '''
 
 import time
@@ -14,20 +14,23 @@ class Solution:
         :type n: int
         :rtype: float
         """
+
         if n ==0:
             return 1
+        elif n<0:
+            return 1/self.myPow(x,-n)
+        elif n==2:
+            return x*x
+
         if x == 0:
-            return 0
+            return 0.0
         elif x==1:
-            return 1
-        out_t=1
-        for i in range(abs(n)):
-            out_t*=x
-            if out_t ==0:
-                return 0.0
-        if n<0 and out_t:
-            out_t=1/out_t
-        return round(out_t,5)
+            return 1.0
+        temp= self.myPow(x,n//2)
+        if n%2:
+            return x*self.myPow(temp,2)
+        else:
+            return self.myPow(temp,2)
 
 
         
@@ -58,14 +61,45 @@ if __name__ == "__main__":
 
 '''
 class Solution:
-    def titleToNumber(self, s):
+    def myPow(self, x, n):
         """
-        :type s: str
-        :rtype: int
+        :type x: float
+        :type n: int
+        :rtype: float
         """
-        if not s:return None
-        num = 0
-        for c in s:
-            num = ((num*26) + ord(c) -64)
-        return num
+        s = 1        
+        if n < 0:
+            n = -n
+            k = 0
+        else:
+            k = 1
+            
+        while n > 0: 
+            if n % 2 == 1:            
+                s *= x                    
+            n //= 2
+            x *= x
+            
+        if k:
+            return s
+        return 1/s
+
+
+class Solution:
+
+    def myPow(self, x, n):
+        """
+        求 x 的 n 次幂
+        使用递归的方法,每次缩小2的倍数
+        :type x: float
+        :type n: int
+        :rtype: float
+        """
+        if not n:
+            return 1
+        if n < 0:
+            return 1 / self.myPow(x, -n)
+        if n & 1:
+            return x * self.myPow(x, n - 1)
+        return self.myPow(x * x, n // 2)        
 '''
