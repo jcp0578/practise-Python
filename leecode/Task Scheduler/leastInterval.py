@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 '''
-error
+AC
 '''
 
 import time
@@ -9,21 +9,23 @@ import time
 
 class Solution:
     def task_count(self,task_list,n):
-        out_t=task_list[0]*(n+1)
-        task_sum=sum(task_list)
-        if out_t >=task_sum:
-            return out_t
-        else:
-            temp=out_t
-            temp-=task_list[0]
-            for i in range(1,len(task_list)):
-                if temp >= task_list[i]:
-                    temp-=task_list[i]
+        if n==0:
+            return sum(task_list)
+        same_tasks=1
+        for i in range(1,len(task_list)):
+            if task_list[i]==task_list[i-1]: 
+                same_tasks+=1
+                if same_tasks <n+1:
+                    continue
                 else:
-                    task_list[i]-=temp
                     break
-            out_t +=self.task_count(task_list[i:],n)
-            return out_t
+            else:
+                break
+            
+        out_t=(task_list[0]-1)*(n+1)+same_tasks
+        task_sum=sum(task_list)
+
+        return max(out_t,task_sum)
 
 
     def leastInterval(self, tasks, n):
@@ -45,9 +47,9 @@ if __name__ == "__main__":
 
     t0 = time.perf_counter()
 
-    test_list = [["A","A","A","B","B","B"],]
-    test_list_2 = [2]
-    answer_list = [8]
+    test_list = [["A","A","A","B","B","B","C"],["A","A","A"]]
+    test_list_2 = [2,1]
+    answer_list = [8,5]
 
     test = Solution()
     for i in range(len(test_list)):
@@ -64,5 +66,41 @@ if __name__ == "__main__":
     print("\nRun Time is %f s" % (time.perf_counter() - t0))
 
 '''
+class Solution:
+    def leastInterval(self, tasks, n):
+        """
+        :type tasks: List[str]
+        :type n: int
+        :rtype: int
+        """
+        helper = [0]*26
+        for x in tasks:
+            helper[ord(x)-65]+=1
+        helper.sort(reverse = True)
+        ans = helper[0]*(n+1)-n
+        for i in range(1,len(helper)):
+            if(helper[0] == helper[i]):
+                ans+=1
+            else:
+                break
+        return max(ans,sum(helper))
 
+class Solution:
+    def leastInterval(self, tasks, n):
+        """
+        :type tasks: List[str]
+        :type n: int
+        :rtype: int
+        """
+        letter_count = collections.Counter(tasks)
+        count_max = max(letter_count.values())
+        count = 0
+        for cnt in letter_count.values():
+            if cnt == count_max:
+                count += 1
+        result = (count_max - 1) * n + count_max + count - 1
+        if result < len(tasks):
+            return len(tasks)
+        else:
+            return result
 '''
