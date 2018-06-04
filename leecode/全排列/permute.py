@@ -1,27 +1,29 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 '''
-AC -but bad
+AC
 '''
 
 import time
 
 
-class Solution:
+class Solution(object):
     def permute(self, nums):
         """
         :type nums: List[int]
         :rtype: List[List[int]]
         """
-        if not nums:
-            return []
-        res = [","+str(i) for i in nums]
-        for i in nums[1:]:
-            res = [m+","+str(n) for m in res for n in nums if ","+str(n) not in m]
-        out_t=[]
-        for num in res:
-            out_t.append(list(map(int,(list(num[1:].split(","))))))
-        return out_t         
+        result = []
+        def generate(arr, rem):
+            if len(rem) == 0:
+                result.append(arr)
+            for i in range(len(rem)):
+                new_arr = arr[:]
+                new_arr.append(rem[i])
+                generate(new_arr, rem[:i] + rem[i+1:])
+        
+        generate([], nums)
+        return result       
 
 if __name__ == "__main__":
 
@@ -42,6 +44,21 @@ if __name__ == "__main__":
                 % (out_t, answer_list[i], str(test_list[i])))
 
     print("\nRun Time is %f s" % (time.perf_counter() - t0))
-'''
 
+'''
+class Solution:
+    def permute(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        ans = []
+        if len(nums)<=1:
+            ans.append(nums)
+        else:
+            for i,num in enumerate(nums):
+                n = nums[:i]+nums[i+1:]
+                for y in self.permute(n):
+                    ans.append([num]+y)
+        return ans
 '''
