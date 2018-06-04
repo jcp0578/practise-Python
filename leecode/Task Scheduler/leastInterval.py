@@ -8,26 +8,6 @@ import time
 
 
 class Solution:
-    def task_count(self,task_list,n):
-        if n==0:
-            return sum(task_list)
-        same_tasks=1
-        for i in range(1,len(task_list)):
-            if task_list[i]==task_list[i-1]: 
-                same_tasks+=1
-                if same_tasks <n+1:
-                    continue
-                else:
-                    break
-            else:
-                break
-            
-        out_t=(task_list[0]-1)*(n+1)+same_tasks
-        task_sum=sum(task_list)
-
-        return max(out_t,task_sum)
-
-
     def leastInterval(self, tasks, n):
         """
         :type tasks: List[str]
@@ -38,7 +18,15 @@ class Solution:
         for task in tasks:
             task_list[ord(task)-65]+=1
         task_list.sort(reverse=True)
-        return self.task_count(task_list,n)
+
+        out_t=(task_list[0]-1)*(n+1)+1
+        for i in range(1,26):
+            if task_list[i]==task_list[0]: 
+                out_t+=1
+            else:
+                break
+        
+        return max(out_t,sum(task_list))
 
         
 
