@@ -1,23 +1,37 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 '''
-
+AC but not a good solution
 '''
 
 import time
-
+import copy
 
 class Solution:
+    _out_t=[]
     def subsets(self, nums):
         """
         :type nums: List[int]
         :rtype: List[List[int]]
         """
-        out_t=[]
-        out_t.append([])
-        res=[[num] for num in nums]
-        out_t.extend(res)
-        return out_t
+        self._out_t=[]
+        temp_out=[]
+        nums.sort()
+        self.backtrack(temp_out,nums)
+        return self._out_t
+    def backtrack(self,temp_out,nums):
+        _temp_out=copy.copy(temp_out)          
+        self._out_t.append(_temp_out)
+        if len(_temp_out) < len(nums):
+            for num in nums:
+                if _temp_out==[] or num> _temp_out[-1]:
+                    _temp_out.append(num)
+                    self.backtrack(_temp_out,nums)
+                    _temp_out.pop()
+                else:
+                    continue
+        else:
+            return 1
 
 if __name__ == "__main__":
 
@@ -40,18 +54,28 @@ if __name__ == "__main__":
     print("\nRun Time is %f s" % (time.perf_counter() - t0))
 '''
 class Solution:
-    def permute(self, nums):
+    
+    def subsets(self, nums):
         """
         :type nums: List[int]
         :rtype: List[List[int]]
         """
-        ans = []
-        if len(nums)<=1:
-            ans.append(nums)
-        else:
-            for i,num in enumerate(nums):
-                n = nums[:i]+nums[i+1:]
-                for y in self.permute(n):
-                    ans.append([num]+y)
-        return ans
+        res = []
+        for index in range(1<<len(nums)):#n^2
+            item = []
+            for j in range(len(nums)):
+                if(index&(1<<j)):item.append(nums[j])
+            res.append(item)
+        return res
+
+class Solution:
+    def subsets(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        results=[[]]
+        for i in nums:
+            results=results+[[i]+num for num in results]
+        return results
 '''
