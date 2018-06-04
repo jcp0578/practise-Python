@@ -1,37 +1,23 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 '''
-AC but not a good solution
+AC pythonic
 '''
 
 import time
 import copy
 
 class Solution:
-    _out_t=[]
     def subsets(self, nums):
         """
         :type nums: List[int]
         :rtype: List[List[int]]
         """
-        self._out_t=[]
-        temp_out=[]
-        nums.sort()
-        self.backtrack(temp_out,nums)
-        return self._out_t
-    def backtrack(self,temp_out,nums):
-        _temp_out=copy.copy(temp_out)          
-        self._out_t.append(_temp_out)
-        if len(_temp_out) < len(nums):
-            for num in nums:
-                if _temp_out==[] or num> _temp_out[-1]:
-                    _temp_out.append(num)
-                    self.backtrack(_temp_out,nums)
-                    _temp_out.pop()
-                else:
-                    continue
-        else:
-            return 1
+        out_t=[[]]
+        for i in nums:
+            out_t=out_t +[ [i]+temp for temp in out_t]
+        return out_t
+
 
 if __name__ == "__main__":
 
@@ -67,15 +53,4 @@ class Solution:
                 if(index&(1<<j)):item.append(nums[j])
             res.append(item)
         return res
-
-class Solution:
-    def subsets(self, nums):
-        """
-        :type nums: List[int]
-        :rtype: List[List[int]]
-        """
-        results=[[]]
-        for i in nums:
-            results=results+[[i]+num for num in results]
-        return results
 '''
