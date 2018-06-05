@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 '''
-AC but ugly
+AC
 '''
 import sys
 import time
@@ -20,32 +20,21 @@ class Solution:
         if len_y ==0:
             return False
         len_x=len(board[0])
-        if len_x ==0:
-            return False
 
-        flag=[]
-        for i in range(len_y):
-            temp=[]
-            for j in range(len_x):
-                temp.append(0)
-            flag.append(temp)  
-
+ 
         out_t =False
         def backtrack(word_t,x,y):
             nonlocal out_t
-            nonlocal flag
             if out_t:
-                return 0
+                return out_t
 
             if x <0 or y<0:
                 return 0
             try :
-                if flag[y][x]==0:
-                    if board[y][x] == word[len(word_t)]:
-                        word_t=word_t+board[y][x]
-                        flag[y][x]=1
-                    else:
-                        return 0
+                temp=board[y][x]
+                if temp == word[len(word_t)]:
+                    word_t=word_t+temp
+                    board[y][x]="!"
                 else:
                     return 0
             except IndexError:
@@ -59,7 +48,7 @@ class Solution:
                 backtrack(word_t,x-1,y)
                 backtrack(word_t,x,y+1)
                 backtrack(word_t,x,y-1)
-            flag[y][x]=0
+            board[y][x]=temp
             return out_t
 
         for i in range(len_y):
@@ -102,6 +91,45 @@ if __name__ == "__main__":
         print("\nRun Time is %f s" % (time.perf_counter() - t0))
     else:
         print("\nRun Time is %f s" % (time.time() - t0))
-'''
 
+'''
+class Solution:
+    # @param board, a list of lists of 1 length string
+    # @param word, a string
+    # @return a boolean
+    def exist(self, board, word):
+        def dfs(x, y, word):
+            if len(word)==0: return True
+            #up
+            if x>0 and board[x-1][y]==word[0]:
+                tmp=board[x][y]; board[x][y]='#'
+                if dfs(x-1,y,word[1:]):
+                    return True
+                board[x][y]=tmp
+            #down
+            if x<len(board)-1 and board[x+1][y]==word[0]:
+                tmp=board[x][y]; board[x][y]='#'
+                if dfs(x+1,y,word[1:]):
+                    return True
+                board[x][y]=tmp
+            #left
+            if y>0 and board[x][y-1]==word[0]:
+                tmp=board[x][y]; board[x][y]='#'
+                if dfs(x,y-1,word[1:]):
+                    return True
+                board[x][y]=tmp
+            #right
+            if y<len(board[0])-1 and board[x][y+1]==word[0]:
+                tmp=board[x][y]; board[x][y]='#'
+                if dfs(x,y+1,word[1:]):
+                    return True
+                board[x][y]=tmp
+            return False
+                
+        for i in range(len(board)):
+            for j in range(len(board[0])):
+                if board[i][j]==word[0]:
+                    if(dfs(i,j,word[1:])):
+                        return True
+        return False
 '''
