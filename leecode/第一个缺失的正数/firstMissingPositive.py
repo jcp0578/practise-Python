@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 '''
-error
+AC 
 '''
 import sys
 import time
@@ -13,22 +13,13 @@ class Solution:
         :type nums: List[int]
         :rtype: int
         """
-        if not nums:
-            return 1
-        nums=list(set(nums))
-        sum_t = 0
-        min_t = nums[0]
-        max_t = nums[0]
-        for num in nums:
-            if num > 0:
-                min_t = min(min_t, num)
-                max_t = max(max_t, num)
-                sum_t += num
-        if min_t > 1 or max_t < 1:
-            return 1
-        else:
-            out_t = ((min_t+max_t)*(max_t-min_t+1) >> 1)-sum_t
-            return out_t if out_t else max_t+1
+        out_t = 0
+        for i in range(len(nums)):
+            nums = list(map(lambda x: x-1, nums))
+            out_t += 1
+            if not nums.count(0):
+                return out_t
+        return out_t+1
 
 
 if __name__ == "__main__":
@@ -38,8 +29,9 @@ if __name__ == "__main__":
     else:
         t0 = time.time()
 
-    test_list = [[1, 2, 0], [3, 4, -1, 1], [7, 8, 9, 11, 12], [1, 1],[1,1000]]
-    answer_list = [3, 2, 1, 2,2]
+    test_list = [[1, 2, 3], [3, 4, -1, 1],
+                 [7, 8, 9, 11, 12], [1, 1], [1, 1000], []]
+    answer_list = [4, 2, 1, 2, 2, 1]
 
     test = Solution()
     for i in range(len(test_list)):
@@ -59,5 +51,40 @@ if __name__ == "__main__":
         print("\nRun Time is %f s" % (time.time() - t0))
 
 '''
+class Solution:
+	def firstMissingPositive(self, nums):
+		s=set()
+		for x in nums:
+			if x>0:
+				s.add(x)
+		if len(nums)==0:
+			return 1
+		for x in range(1,len(nums)+2):
+			if x not in s:
+				return x
+                
+class Solution:
+    def firstMissingPositive(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        if len(nums) == 0:
+            return 1
+        
+        k = 0
+        for i in range(len(nums)):
+            if nums[i] > 0 and nums[i] <= len(nums):
+                nums[k] = nums[i]
+                k += 1
+        
+        for i in range(k):
+            val = abs(nums[i])
+            nums[val-1] = -abs(nums[val-1])
 
+        for i in range(k):
+            if nums[i] > 0:
+                return i+1
+            
+        return k+1
 '''
