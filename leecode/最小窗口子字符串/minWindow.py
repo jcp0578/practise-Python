@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 '''
-code demo
+not finish
 '''
 import sys
 import time
@@ -15,6 +15,10 @@ class Solution:
         :type t: str
         :rtype: str
         """
+        out_t=[]
+        for index,char in enumerate(s):
+            if char in t:
+                out_t.append(index)
         
 
 
