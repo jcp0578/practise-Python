@@ -1,24 +1,60 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 '''
-not finish
+time out 
 '''
 import sys
 import time
-
+from functools import reduce
 
 
 class Solution:
+    def countStr(self,s):
+        out_t=[0]*128
+        for char in s: 
+                out_t[ord(char)]+=1
+        return out_t
+    
+
     def minWindow(self, s, t):
         """
         :type s: str
         :type t: str
         :rtype: str
         """
-        out_t=[]
-        for index,char in enumerate(s):
-            if char in t:
-                out_t.append(index)
+        s_len=len(s)
+        if not s_len:
+            return ""
+        t_len=len(t)
+        if not t_len:
+            return s[0]
+
+        target_list=self.countStr(t)
+
+        def inTargetStr(char):
+            return (char in t)
+        find_flag=list(map(inTargetStr,s))
+
+        first_t,last_t=0,0
+        min_first,min_last=0,s_len+1
+        while True:
+            while last_t < s_len and reduce(lambda x,y:(x>0)+(y>0),target_list[32:]):
+                if find_flag[last_t]:
+                    target_list[ord(s[last_t])]-=1
+                last_t+=1
+            
+            while first_t < last_t and (not reduce(lambda x,y:(x>0)+(y>0),target_list[32:])):
+                if find_flag[first_t]:
+                    target_list[ord(s[first_t])]+=1
+                first_t+=1
+            else :
+                if (last_t - first_t + 1) < (min_last - min_first):
+                    min_first,min_last=first_t-1,last_t
+            if last_t ==s_len:
+                break     
+        if min_last ==s_len+1:
+            return ""
+        return s[min_first:min_last]
         
 
 
@@ -29,9 +65,9 @@ if __name__ == "__main__":
     else:
         t0 = time.time()
 
-    test_list = ["ADOBECODEBANC",]
-    test_list_2 = ["ABC",]
-    answer_list = ["BANC"]
+    test_list = ["DADOBECODEBANCD","A",""]
+    test_list_2 = ["ABC","B","A"]
+    answer_list = ["BANC","",""]
 
     test = Solution()
     for i in range(len(test_list)):
