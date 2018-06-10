@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 '''
-AC
+AC simply code
 '''
 import sys
 import time
@@ -32,18 +32,13 @@ class Solution:
 
         target_t=self.countStr(t)
 
-        def inTargetStr(char):
-            return (char in t)
-
-        find_flag = list(map(inTargetStr, s))
-
         first_t, last_t = 0, 0
         min_first, min_last = 0, s_len + 1
 
         contain_num=0
         while True:
             while last_t < s_len and contain_num<t_len:
-                if find_flag[last_t]:
+                if s[last_t] in t:
                     target_t[s[last_t]] -= 1
                     if target_t[s[last_t]]==0:
                         contain_num+=1
@@ -52,7 +47,7 @@ class Solution:
                 break
 
             while first_t < last_t:
-                if find_flag[first_t]:
+                if s[first_t] in t:
                     target_t[s[first_t]]+= 1
                     if target_t[s[first_t]] > 0:
                         contain_num-=1
@@ -65,9 +60,7 @@ class Solution:
 
             if last_t == s_len:
                 break
-        if min_last == s_len + 1:
-            return ""
-        return s[min_first:min_last]
+        return "" if min_last == s_len + 1 else s[min_first:min_last]
 
 
 if __name__ == "__main__":
@@ -131,4 +124,39 @@ class Solution(object):
                         if d[s[l]] > 0: cnt -= 1
                     l += 1
         return ans
+
+class Solution:
+    def minWindow(self, s, t):
+        """
+        :type s: str
+        :type t: str
+        :rtype: str
+        """
+        condition = { chr(x):0 for x in range(128)}
+        counter = len(t)
+        n = len(s)
+        
+        if not s or not t:
+            return ""
+        
+        for x in t:
+            condition[x] += 1
+        
+        st, end, mins, mine, flag = 0, 0, 0, n, False
+        
+        while end < n:
+            if condition[s[end]] > 0: 
+                counter -= 1
+            condition[s[end]] -= 1
+            end += 1
+            
+            while not counter:
+                flag = True
+                if end - st < mine - mins:
+                    mins, mine = st, end
+                condition[s[st]] += 1
+                if condition[s[st]] > 0:
+                    counter += 1
+                st += 1
+        return s[mins:mine] if flag else ""
 '''
