@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 '''
-time out
+time out 21/39
 '''
 import sys
 import time
@@ -40,6 +40,7 @@ class Solution:
             wordDice[word] = []
         len_t = len(wordList)
         min_t = len_t + 2
+        min_word_depth=dict()
         for i in range(len_t):
             for j in range(i):
                 if self.wordCompare(wordList[i], wordList[j]):
@@ -54,13 +55,19 @@ class Solution:
             :rtype: bool
             """
             nonlocal min_t
+            nonlocal min_word_depth
             if wordlist_t[-1] == endWord:
                 if depth < min_t:
                     min_t = depth
                     return 1
+                if depth < (min_word_depth[wordlist_t[-1]]):
+                    min_word_depth[wordlist_t[-1]]=depth
+                else:
+                    return 0
+            except KeyError:
+                min_word_depth[wordlist_t[-1]]=depth
+
             for word_t in wordDice[wordlist_t[-1]]:
-                if word_t not in wordlist_t:
-                    wordlist_t.append(word_t)
                     findWord(wordlist_t, depth + 1)
                     wordlist_t.pop()
             return 0
@@ -77,10 +84,10 @@ if __name__ == "__main__":
     else:
         t0 = time.time()
 
-    test_list = ["si"]
-    test_list_2 = ["ar"]
-    test_word_list = ["si","go","se","cm","so","ph","mt","db","mb","sb","kr","ln","tm","le","av","sm","ar","ci","ca","br","ti","ba"]
-    answer_list = [6]
+    test_list = ["sb"]
+    test_list_2 = ["ad"]
+    test_word_list = [chr(a)+chr(b) for a in range(ord("a"),ord("z")+1) for b in range(ord("a"),ord("g")+1)]
+    answer_list = [3]
 
     test = Solution()
     for i in range(len(test_list)):
