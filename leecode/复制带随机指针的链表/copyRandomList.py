@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 '''
-error
+AC
 '''
 import sys
 import time
@@ -36,13 +36,14 @@ class Solution(object):
                 p.next.random=p.random.next
             p=p.next.next
         out_head=head.next
-        p=out_head
+        p=head
         while p:
-            if p.next:
-                p.next=p.next.next
+            temp=p.next.next
+            if temp:
+                p.next.next=temp.next
+            p.next=temp            
             p=p.next
         return out_head
-
 
 
 if __name__ == "__main__":
@@ -52,21 +53,9 @@ if __name__ == "__main__":
     else:
         t0 = time.time()
 
-    test_list = []
-    answer_list = []
-
-    test = Solution()
-    for i in range(len(test_list)):
-        out_t = test.coinChange(test_list[i])
 
 
-        if out_t == answer_list[i]:
-            print("\033[1;32;40m  Pass \033[0m")
-        else:
-            print(
-                "\033[1;31;40m  Fail!!\033[0m\033[0;34;40m out \"%s\" should \"%s\" by \"%.50s\" "
-                % (out_t, answer_list[i],
-                   str(test_list[i])))
+#   do not have test,it is bad
     
     if sys.version_info.major ==3:
         print("\nRun Time is %f s" % (time.perf_counter() - t0))
@@ -74,5 +63,46 @@ if __name__ == "__main__":
         print("\nRun Time is %f s" % (time.time() - t0))
     
 '''
+class Solution(object):
+    def copyRandomList(self, head):
+        """
+        :type head: RandomListNode
+        :rtype: RandomListNode
+        """
+        if head is None:
+            return None
+        src = {}
+        cpy = {}
+        p = head
+        q = cpyHead = RandomListNode(p.label)
+        src[p] = 0
+        cpy[0] = q
+        p = p.next
+        idx = 1
+        while p is not None:
+            q.next = RandomListNode(p.label)
+            q = q.next
+            src[p] = idx
+            cpy[idx] = q
+            idx += 1
+            p = p.next
 
+        p = head
+        rand = []
+        while p is not None:
+            if p.random is None:
+                rand.append(None)
+            else:
+                rand.append(src[p.random])
+            p = p.next
+        q = cpyHead
+        idx = 0
+        while q is not None:
+            if rand[idx] is None:
+                q.random = None
+            else:
+                q.random = cpy[rand[idx]]
+            q = q.next
+            idx += 1
+        return cpyHead
 '''
